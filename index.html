@@ -362,6 +362,21 @@
     transition: background-color 0.12s ease;
   }
   .edit-btn:hover { background: #FAFAFA; }
+  .foot-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .looks-btn {
+    min-height: 36px;
+    padding: 6px 16px;
+    background: #171717;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 14px; font-weight: 500; line-height: 18px;
+    color: #FFFFFF;
+    cursor: default;
+    flex-shrink: 0;
+    transition: background-color 0.12s ease;
+  }
+  .looks-btn:hover { background: #000000; }
 
   .mini-wrap { position: sticky; bottom: 0; background: #FFFFFF; padding-bottom: 26px; }
   .mini {
@@ -600,7 +615,10 @@
         <div class="instr-panel" id="instrPanel"></div>
         <div class="instr-foot">
           <div class="foot-note">Highlighted values are parameters &mdash; edit them in Agent Parameters</div>
-          <button class="edit-btn">Edit instructions</button>
+          <div class="foot-actions">
+            <button class="edit-btn">Edit instructions</button>
+            <button class="looks-btn">Looks good</button>
+          </div>
         </div>
       </div>
     </div>
