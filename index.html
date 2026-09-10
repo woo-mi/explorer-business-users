@@ -470,6 +470,66 @@
   .o-value { flex: 1; font-size: 14px; font-weight: 500; line-height: 18px; color: #171717; }
   .o-edit { width: 24px; flex-shrink: 0; display: flex; justify-content: center; }
 
+  /* Test run and preview (report screen, ported from agent-advanced-automated-version) */
+  @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+  .report-view {
+    position: fixed;
+    inset: 0 0 0 48px;
+    z-index: 300;
+    display: none;
+    background: #FAFAFA;
+    overflow-y: auto;
+  }
+  body.report .report-view { display: block; animation: overlayIn 0.2s ease; }
+  .report-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px 0 12px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E6E6E6;
+  }
+  .report-crumb { display: flex; align-items: center; gap: 8px; }
+  .report-back {
+    display: flex; align-items: center;
+    gap: 10px;
+    background: none; border: none;
+    font-family: system-ui, sans-serif;
+    font-size: 14px; line-height: 20px;
+    color: #171717;
+    cursor: pointer;
+  }
+  .btn-create-agent {
+    height: 32px;
+    display: flex; align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 8px;
+    border: none;
+    background: #171717;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 14px; font-weight: 500; line-height: 18px;
+    color: #FFFFFF;
+    cursor: default;
+  }
+  .btn-create-agent:hover { background: #000000; }
+  .report-body {
+    display: flex;
+    justify-content: center;
+    padding: 25px 24px 60px;
+  }
+  .report-panel {
+    width: 874px;
+    max-width: 100%;
+    border-radius: 20px;
+    outline: 1px solid #E6E6E6;
+    background: #FFFFFF;
+    overflow: hidden;
+  }
+  .report-panel img { display: block; width: 100%; height: auto; }
+
   /* Data domain card (frame "Data domain") */
   .domain-card {
     margin: 0 24px;
@@ -923,8 +983,8 @@
           <div class="domain-foot">
             <div class="foot-note" id="publishNote">Publishing makes the schedule live</div>
             <div class="foot-actions">
-              <button class="edit-btn">Test run</button>
-              <button class="looks-btn">Create agent</button>
+              <button class="edit-btn" id="testRunBtn" style="cursor: pointer;">Test run</button>
+              <button class="looks-btn" id="createAgentBtn" style="cursor: pointer;">Create agent</button>
             </div>
           </div>
         </div>
@@ -973,6 +1033,29 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="report-view">
+  <div class="report-topbar">
+    <div class="report-crumb">
+      <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1.5" width="14" height="13" rx="2.5" fill="none" stroke="#666666"/>
+        <path d="M5.6 1.5 L5.6 14.5" fill="none" stroke="#666666"/>
+      </svg>
+      <button id="reportBack" class="report-back">
+        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.9 3.2 L5.3 8 L9.9 12.8" fill="none" stroke="#171717" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Agent Outcome, test run and preview report
+      </button>
+    </div>
+    <button class="btn-create-agent">Create agent</button>
+  </div>
+  <div class="report-body">
+    <div class="report-panel">
+      <img src="report-content-v2.png" alt="Daily KPI watcher report" width="874" height="4834" />
     </div>
   </div>
 </div>
@@ -1268,6 +1351,7 @@
     if (!document.body.classList.contains('convo')) return;
     clearStages();
     document.body.classList.remove('convo');
+    document.body.classList.remove('report');
   }
 
   function textareaHeight() {
@@ -1357,8 +1441,25 @@
     });
   });
 
+  /* Test run and preview (both Overview actions land here, per user 2026-09-09) */
+  var reportView = document.querySelector('.report-view');
+  function openReport() {
+    reportView.scrollTop = 0;
+    document.body.classList.add('report');
+  }
+  function closeReport() {
+    document.body.classList.remove('report');
+  }
+  document.getElementById('testRunBtn').addEventListener('click', openReport);
+  document.getElementById('createAgentBtn').addEventListener('click', openReport);
+  document.getElementById('reportBack').addEventListener('click', closeReport);
+
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
+    if (document.body.classList.contains('report')) {
+      closeReport(); /* back to the Overview thread */
+      return;
+    }
     if (document.body.classList.contains('convo')) {
       closeInstr(); /* back to the filled home state */
       return;
