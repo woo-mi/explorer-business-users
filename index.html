@@ -308,7 +308,9 @@
     color: #333444;
   }
 
-  .u-bubble-sm { width: fit-content; max-width: 744px; min-height: 0; }
+  .u-bubble-instr { min-height: 0; padding: 14px 18px; }
+  .bubble-sections { display: flex; flex-direction: column; gap: 12px; max-width: 668px; }
+  .bubble-sections .sec-body { font-size: 14px; font-weight: 400; line-height: 160%; color: #333444; }
   [hidden] { display: none !important; }
 
   .bottom-slot { margin-top: auto; padding: 48px 0 16px; }
@@ -653,7 +655,7 @@
 
     <div class="u-row stg" id="stgLooks" hidden style="margin-top: 40px;">
       <div class="u-avatar">J</div>
-      <div class="u-bubble u-bubble-sm"><div class="bubble-text">Looks good</div></div>
+      <div class="u-bubble u-bubble-instr"><div class="bubble-sections" id="looksBubbleContent"></div></div>
     </div>
 
     <div class="t-row stg" id="stgThought2" hidden style="margin-top: 16px;">
@@ -795,8 +797,8 @@
   var stageDelays = [80, 800, 1400, 2050, 2500, 2500];
   var stageTimers = [];
 
-  function renderSections(sections) {
-    var panel = document.getElementById('instrPanel');
+  function renderSections(sections, container) {
+    var panel = container || document.getElementById('instrPanel');
     panel.innerHTML = '';
     sections.forEach(function (sec) {
       var wrap = document.createElement('div');
@@ -850,6 +852,9 @@
   function startPhase2() {
     if (phase2Active) return;
     phase2Active = true;
+    /* the confirmation bubble carries the approved instructions themselves */
+    var meta = AGENTS[selectedLabel] || AGENTS['Daily KPI watcher'];
+    renderSections(meta.sections, document.getElementById('looksBubbleContent'));
     var card = document.getElementById('stgCard');
     card.classList.remove('in'); /* fade the Instructions card out */
     stageTimers.push(setTimeout(function () { card.hidden = true; }, 360));
