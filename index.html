@@ -383,7 +383,7 @@
     transition: background-color 0.12s ease;
   }
   .looks-btn:hover { background: #000000; }
-  #looksBtn, #applyBtn { cursor: pointer; }
+  #looksBtn, #applyBtn, #schedApplyBtn { cursor: pointer; }
 
   /* Trigger card (frame "Trigger") */
   .trigger-card {
@@ -413,8 +413,62 @@
     transition: background-color 0.12s ease;
   }
   .t-opt:hover { background: #FAFAFA; }
+  .t-opt.live { cursor: pointer; }
   .t-opt-label { font-size: 14px; font-weight: 500; line-height: 143%; color: #171717; }
   .t-opt-hint { flex-shrink: 0; font-size: 12px; font-weight: 500; letter-spacing: 0.12px; line-height: 16px; color: #666666; }
+
+  /* Schedule card (frame "Schedule") */
+  .seg {
+    align-self: flex-start;
+    display: flex; align-items: center; gap: 2px;
+    background: #F2F2F2;
+    border-radius: 8px;
+    padding: 3px;
+  }
+  .seg-item {
+    min-height: 30px;
+    padding: 4px 14px;
+    border-radius: 6px;
+    display: flex; align-items: center;
+    font-size: 13px; font-weight: 500; line-height: 16px;
+    color: #666666;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .seg-item.active { background: #171717; color: #FFFFFF; }
+  .sched-when { display: flex; align-items: center; gap: 8px; }
+  .sched-word { font-size: 13px; font-weight: 400; line-height: 16px; color: #666666; }
+  .sel {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    min-height: 34px;
+    padding: 5px 10px;
+    border: 1px solid #D4D4D4;
+    border-radius: 6px;
+    font-size: 13px; font-weight: 400; line-height: 16px;
+    color: #171717;
+    flex-shrink: 0;
+  }
+
+  /* Overview card (frame "Overview Ready to publish") */
+  .o-head { display: flex; align-items: center; justify-content: space-between; }
+  .o-name { font-size: 15px; font-weight: 600; line-height: 18px; color: #171717; }
+  .o-pill {
+    background: #F2F2F2;
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 12px; font-weight: 500; line-height: 16px;
+    color: #666666;
+  }
+  .o-row {
+    display: flex; align-items: center; gap: 12px;
+    min-height: 46px;
+    padding: 4px 8px;
+    border-bottom: 1px solid #E6E6E6;
+  }
+  .o-row:last-child { border-bottom: none; }
+  .o-label { width: 110px; flex-shrink: 0; font-size: 13px; font-weight: 500; line-height: 16px; color: #666666; }
+  .o-value { flex: 1; font-size: 14px; font-weight: 500; line-height: 18px; color: #171717; }
+  .o-edit { width: 24px; flex-shrink: 0; display: flex; justify-content: center; }
 
   /* Data domain card (frame "Data domain") */
   .domain-card {
@@ -709,6 +763,36 @@
 
     <div class="a-text stg" id="stgAnswer3" hidden><span id="answerText3"></span></div>
 
+    <div class="u-row stg" id="stgBubble4" hidden style="margin-top: 40px;">
+      <div class="u-avatar">J</div>
+      <div class="u-bubble u-bubble-sm"><div class="bubble-text" id="bubble4Text"></div></div>
+    </div>
+    <div class="t-row stg" id="stgThought4" hidden style="margin-top: 16px;">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z" fill="#A7A8BB"/></svg>
+      Thought for 2 seconds
+    </div>
+    <div class="a-text stg" id="stgAnswer4" hidden><span id="answerText4"></span></div>
+
+    <div class="u-row stg" id="stgBubble5" hidden style="margin-top: 40px;">
+      <div class="u-avatar">J</div>
+      <div class="u-bubble u-bubble-sm"><div class="bubble-text" id="bubble5Text"></div></div>
+    </div>
+    <div class="t-row stg" id="stgThought5" hidden style="margin-top: 16px;">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z" fill="#A7A8BB"/></svg>
+      Thought for 2 seconds
+    </div>
+    <div class="a-text stg" id="stgAnswer5" hidden><span id="answerText5"></span></div>
+
+    <div class="u-row stg" id="stgBubble6" hidden style="margin-top: 40px;">
+      <div class="u-avatar">J</div>
+      <div class="u-bubble u-bubble-sm"><div class="bubble-text" id="bubble6Text"></div></div>
+    </div>
+    <div class="t-row stg" id="stgThought6" hidden style="margin-top: 16px;">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z" fill="#A7A8BB"/></svg>
+      Thought for 2 seconds
+    </div>
+    <div class="a-text stg" id="stgAnswer6" hidden><span id="answerText6"></span></div>
+
     <div class="bottom-slot">
       <div class="stg" id="stgCard">
         <div class="instr-card">
@@ -748,12 +832,99 @@
           <div class="domain-title" id="triggerTitle">How should KPI Watcher run?</div>
           <div class="t-quote" id="triggerQuote"></div>
           <div class="t-opts">
-            <div class="t-opt">
+            <div class="t-opt live" id="optSchedule">
               <div class="t-opt-label" id="triggerSchedLabel">On a schedule &mdash; every day at a set time</div>
               <div class="t-opt-hint" id="triggerSchedHint">Recommended &middot; matches &ldquo;daily&rdquo;</div>
             </div>
-            <div class="t-opt">
+            <div class="t-opt live" id="optManual">
               <div class="t-opt-label">Manually &mdash; run it yourself from the agent page</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stg" id="stgSchedule" hidden>
+        <div class="trigger-card">
+          <div class="domain-title">Schedule</div>
+          <div class="seg" id="schedSeg">
+            <div class="seg-item active" data-cadence="daily">Daily</div>
+            <div class="seg-item" data-cadence="weekly">Weekly</div>
+            <div class="seg-item" data-cadence="monthly">Monthly</div>
+          </div>
+          <div class="sched-when">
+            <div class="sched-word">at</div>
+            <div class="sel" style="width: 110px;">
+              9:00 AM
+              <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3.5 5 6.5 8 3.5" fill="none" stroke="#666666" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <div class="sched-word">in</div>
+            <div class="sel" style="width: 230px;">
+              America/New_York
+              <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3.5 5 6.5 8 3.5" fill="none" stroke="#666666" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="domain-foot">
+            <div class="foot-note" id="nextRunNote">Next run &middot; Tomorrow, Sep 5 at 9:00 AM &mdash; then every day</div>
+            <div class="foot-actions">
+              <button class="edit-btn">Skip</button>
+              <button class="looks-btn" id="schedApplyBtn">Apply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stg" id="stgDelivery" hidden>
+        <div class="trigger-card">
+          <div class="domain-title" id="deliveryTitle">Where should the daily summary go?</div>
+          <div class="t-quote" id="deliveryQuote"></div>
+          <div class="t-opts">
+            <div class="t-opt live" data-dopt="0">
+              <div class="t-opt-label" id="dopt0Label">Slack &mdash; #revops-daily</div>
+              <div class="t-opt-hint">Recommended</div>
+            </div>
+            <div class="t-opt live" data-dopt="1">
+              <div class="t-opt-label" id="dopt1Label">Email &mdash; send me the summary each run</div>
+            </div>
+            <div class="t-opt live" data-dopt="2">
+              <div class="t-opt-label">Keep in Wisdom only &mdash; no delivery</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stg" id="stgOverview" hidden>
+        <div class="trigger-card" style="gap: 10px;">
+          <div class="o-head">
+            <div class="o-name" id="oName">KPI Watcher</div>
+            <div class="o-pill">Ready to publish</div>
+          </div>
+          <div>
+            <div class="o-row">
+              <div class="o-label">Trigger</div>
+              <div class="o-value" id="oTrigger"></div>
+              <div class="o-edit"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M11.3 2.2 13.8 4.7 5.5 13 2.5 13.5 3 10.5z" fill="none" stroke="#A8A8A8" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="o-row">
+              <div class="o-label">Domain</div>
+              <div class="o-value" id="oDomain"></div>
+              <div class="o-edit"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M11.3 2.2 13.8 4.7 5.5 13 2.5 13.5 3 10.5z" fill="none" stroke="#A8A8A8" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="o-row">
+              <div class="o-label">Parameters</div>
+              <div class="o-value" id="oParams"></div>
+              <div class="o-edit"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M11.3 2.2 13.8 4.7 5.5 13 2.5 13.5 3 10.5z" fill="none" stroke="#A8A8A8" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="o-row">
+              <div class="o-label">Delivery</div>
+              <div class="o-value" id="oDelivery"></div>
+              <div class="o-edit"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M11.3 2.2 13.8 4.7 5.5 13 2.5 13.5 3 10.5z" fill="none" stroke="#A8A8A8" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+            </div>
+          </div>
+          <div class="domain-foot">
+            <div class="foot-note" id="publishNote">Publishing makes the schedule live</div>
+            <div class="foot-actions">
+              <button class="edit-btn">Test run</button>
+              <button class="looks-btn">Create agent</button>
             </div>
           </div>
         </div>
@@ -822,6 +993,9 @@
       name: 'KPI Watcher',
       quote: '“Runs daily to review HubSpot sales and activity KPIs…” — your prompt',
       cadence: 'daily',
+      channel: '#revops-daily',
+      noun: 'summary',
+      deliveryQuote: '“…post a concise summary to Slack” — your prompt',
       answer: 'I will set up the KPI review logic, but need the daily run time and posting destination before scheduling it.',
       sections: [
         { label: 'DATA', parts: ['Pull the last ', { p: 'lookback_window' }, ' days of HubSpot sales and activity KPIs for ', { p: 'region' }, ' accounts.'] },
@@ -833,6 +1007,9 @@
       name: 'Pipeline Digest',
       quote: '“Runs daily to review new and progressing deals in the pipeline…” — your prompt',
       cadence: 'daily',
+      channel: '#sales-pipeline',
+      noun: 'digest',
+      deliveryQuote: '“…post a concise digest” — your prompt',
       answer: 'I will set up the pipeline digest logic, but need the daily run time and posting destination before scheduling it.',
       sections: [
         { label: 'DATA', parts: ['Pull the last ', { p: 'lookback_window' }, ' days of HubSpot pipeline and deal-stage activity for ', { p: 'region' }, ' accounts.'] },
@@ -844,6 +1021,9 @@
       name: 'Churn Sentinel',
       quote: '“Runs daily to scan account health and usage signals…” — your prompt',
       cadence: 'daily',
+      channel: '#cs-alerts',
+      noun: 'alert list',
+      deliveryQuote: '“…post an alert list” — your prompt',
       answer: 'I will set up the churn-risk scoring, but need the daily run time and alert destination before scheduling it.',
       sections: [
         { label: 'DATA', parts: ['Pull the last ', { p: 'lookback_window' }, ' days of account health and usage signals for ', { p: 'region' }, ' accounts.'] },
@@ -855,6 +1035,9 @@
       name: 'Exec Summary',
       quote: '“Runs weekly to summarize the week’s key business metrics…” — your prompt',
       cadence: 'weekly',
+      channel: '#exec-weekly',
+      noun: 'summary',
+      deliveryQuote: '“…post an executive summary” — your prompt',
       answer: 'I will set up the weekly summary logic, but need the run day and posting destination before scheduling it.',
       sections: [
         { label: 'DATA', parts: ['Pull the last ', { p: 'lookback_window' }, ' weeks of key business metrics for ', { p: 'region' }, ' accounts.'] },
@@ -907,11 +1090,33 @@
 
   var phase3Ids = ['stgBubble3', 'stgThought3', 'stgAnswer3', 'stgTrigger'];
   var phase3Active = false;
+  var laterIds = [
+    'stgBubble4', 'stgThought4', 'stgAnswer4', 'stgSchedule',
+    'stgBubble5', 'stgThought5', 'stgAnswer5', 'stgDelivery',
+    'stgBubble6', 'stgThought6', 'stgAnswer6', 'stgOverview'
+  ];
+  var trigMode = null;       /* 'schedule' | 'manual' */
+  var schedCadence = 'daily';
+  var schedApplied = false;
+  var deliveryChoice = null; /* 0 slack, 1 email, 2 wisdom-only */
+  var chosenDomain = null;
+
+  var SEG = {
+    daily:   { label: 'Daily',   unit: 'day',   next: 'Next run · Tomorrow, Sep 5 at 9:00 AM — then every day' },
+    weekly:  { label: 'Weekly',  unit: 'week',  next: 'Next run · Monday, Sep 8 at 9:00 AM — then every week' },
+    monthly: { label: 'Monthly', unit: 'month', next: 'Next run · Wednesday, Oct 1 at 9:00 AM — then every month' }
+  };
+
+  function currentMeta() { return AGENTS[selectedLabel] || AGENTS['Daily KPI watcher']; }
 
   function resetPhase2() {
     phase2Active = false;
     phase3Active = false;
-    phase2Ids.concat(phase3Ids).forEach(function (id) {
+    trigMode = null;
+    schedApplied = false;
+    deliveryChoice = null;
+    chosenDomain = null;
+    phase2Ids.concat(phase3Ids, laterIds).forEach(function (id) {
       var el = document.getElementById(id);
       el.classList.remove('in');
       el.hidden = true;
@@ -919,6 +1124,99 @@
     document.getElementById('stgCard').hidden = false;
     var rows = Array.prototype.slice.call(document.querySelectorAll('.d-row'));
     rows.forEach(function (r, i) { r.classList.toggle('selected', i === 0); });
+  }
+
+  /* Fade the outgoing card, then stage in a bubble/thought/answer/card quartet. */
+  function advance(outId, ids) {
+    var out = document.getElementById(outId);
+    out.classList.remove('in');
+    stageTimers.push(setTimeout(function () { out.hidden = true; }, 360));
+    ids.forEach(function (id, idx) {
+      stageTimers.push(setTimeout(function () {
+        var el = document.getElementById(id);
+        el.hidden = false;
+        stageTimers.push(setTimeout(function () {
+          el.classList.add('in');
+          scrollThread();
+        }, 20));
+      }, phase2Delays[idx]));
+    });
+  }
+
+  function setCadence(cadence) {
+    schedCadence = cadence;
+    Array.prototype.slice.call(document.querySelectorAll('.seg-item')).forEach(function (s) {
+      s.classList.toggle('active', s.getAttribute('data-cadence') === cadence);
+    });
+    document.getElementById('nextRunNote').textContent = SEG[cadence].next;
+  }
+
+  function setupDelivery(meta) {
+    var cadWord = trigMode === 'manual' ? '' : schedCadence + ' ';
+    document.getElementById('deliveryTitle').textContent = 'Where should the ' + cadWord + meta.noun + ' go?';
+    document.getElementById('deliveryQuote').textContent = meta.deliveryQuote;
+    document.getElementById('dopt0Label').textContent = 'Slack — ' + meta.channel;
+    document.getElementById('dopt1Label').textContent = 'Email — send me the ' + meta.noun + ' each run';
+  }
+
+  function chooseTrigger(mode) {
+    if (trigMode || !document.getElementById('stgTrigger').classList.contains('in')) return;
+    trigMode = mode;
+    var meta = currentMeta();
+    if (mode === 'schedule') {
+      document.getElementById('bubble4Text').textContent = document.getElementById('triggerSchedLabel').textContent;
+      document.getElementById('answerText4').textContent = 'A schedule it is. When should ' + meta.name + ' run?';
+      setCadence(meta.cadence);
+      advance('stgTrigger', ['stgBubble4', 'stgThought4', 'stgAnswer4', 'stgSchedule']);
+    } else {
+      document.getElementById('bubble4Text').textContent = 'Manually — run it yourself from the agent page';
+      document.getElementById('answerText4').textContent = 'Manual runs it is — you can trigger ' + meta.name + ' anytime from the agent page. Where should the ' + meta.noun + ' go?';
+      setupDelivery(meta);
+      advance('stgTrigger', ['stgBubble4', 'stgThought4', 'stgAnswer4', 'stgDelivery']);
+    }
+  }
+
+  function applySchedule() {
+    if (schedApplied || !document.getElementById('stgSchedule').classList.contains('in')) return;
+    schedApplied = true;
+    var meta = currentMeta();
+    document.getElementById('bubble5Text').textContent = SEG[schedCadence].label + ' at 9:00 AM (America/New_York)';
+    document.getElementById('answerText5').textContent = 'Schedule set. Where should the ' + meta.noun + ' go?';
+    setupDelivery(meta);
+    advance('stgSchedule', ['stgBubble5', 'stgThought5', 'stgAnswer5', 'stgDelivery']);
+  }
+
+  function countParams(meta) {
+    var n = 0;
+    meta.sections.forEach(function (sec) {
+      sec.parts.forEach(function (p) { if (typeof p !== 'string') n++; });
+    });
+    return n;
+  }
+
+  function chooseDelivery(idx) {
+    if (deliveryChoice !== null || !document.getElementById('stgDelivery').classList.contains('in')) return;
+    deliveryChoice = idx;
+    var meta = currentMeta();
+    var labels = [
+      'Slack — ' + meta.channel,
+      'Email — send me the ' + meta.noun + ' each run',
+      'Keep in Wisdom only — no delivery'
+    ];
+    document.getElementById('bubble6Text').textContent = labels[idx];
+    document.getElementById('answerText6').textContent = 'That’s everything — ' + meta.name + ' is ready to publish. Review the setup below.';
+    document.getElementById('oName').textContent = meta.name;
+    document.getElementById('oTrigger').textContent = trigMode === 'manual'
+      ? 'Manual · run it yourself from the agent page'
+      : 'Schedule · every ' + SEG[schedCadence].unit + ' at 9:00 AM (America/New_York)';
+    document.getElementById('oDomain').textContent = chosenDomain || 'HubSpot Sales';
+    var n = countParams(meta);
+    document.getElementById('oParams').textContent = n + ' defined · ' + Math.max(0, n - 1) + ' asked on manual runs';
+    document.getElementById('oDelivery').textContent =
+      idx === 0 ? 'Slack · ' + meta.channel : idx === 1 ? 'Email · sent to you each run' : 'Wisdom only · no delivery';
+    document.getElementById('publishNote').textContent =
+      trigMode === 'manual' ? 'Publishing makes the agent live' : 'Publishing makes the schedule live';
+    advance('stgDelivery', ['stgBubble6', 'stgThought6', 'stgAnswer6', 'stgOverview']);
   }
 
   function scrollThread() {
@@ -929,49 +1227,25 @@
     if (phase2Active) return;
     phase2Active = true;
     /* the confirmation bubble carries the approved instructions themselves */
-    var meta = AGENTS[selectedLabel] || AGENTS['Daily KPI watcher'];
+    var meta = currentMeta();
     renderSections(meta.sections, document.getElementById('looksBubbleContent'));
-    var card = document.getElementById('stgCard');
-    card.classList.remove('in'); /* fade the Instructions card out */
-    stageTimers.push(setTimeout(function () { card.hidden = true; }, 360));
-    phase2Ids.forEach(function (id, idx) {
-      stageTimers.push(setTimeout(function () {
-        var el = document.getElementById(id);
-        el.hidden = false;
-        stageTimers.push(setTimeout(function () {
-          el.classList.add('in');
-          scrollThread();
-        }, 20));
-      }, phase2Delays[idx]));
-    });
+    advance('stgCard', phase2Ids);
   }
 
   function startPhase3() {
     if (phase3Active || !phase2Active) return;
     phase3Active = true;
-    var meta = AGENTS[selectedLabel] || AGENTS['Daily KPI watcher'];
-    var domain = document.querySelector('.d-row.selected .d-name').textContent;
-    document.getElementById('domainBubbleText').textContent = domain;
+    var meta = currentMeta();
+    chosenDomain = document.querySelector('.d-row.selected .d-name').textContent;
+    document.getElementById('domainBubbleText').textContent = chosenDomain;
     document.getElementById('answerText3').textContent =
-      domain + ' it is — the agent will only query that domain. Next, choose how ' + meta.name + ' should be triggered.';
+      chosenDomain + ' it is — the agent will only query that domain. Next, choose how ' + meta.name + ' should be triggered.';
     document.getElementById('triggerTitle').textContent = 'How should ' + meta.name + ' run?';
     document.getElementById('triggerQuote').textContent = meta.quote;
     document.getElementById('triggerSchedLabel').textContent =
       'On a schedule — every ' + (meta.cadence === 'weekly' ? 'week' : 'day') + ' at a set time';
     document.getElementById('triggerSchedHint').textContent = 'Recommended · matches “' + meta.cadence + '”';
-    var domainCard = document.getElementById('stgDomain');
-    domainCard.classList.remove('in');
-    stageTimers.push(setTimeout(function () { domainCard.hidden = true; }, 360));
-    phase3Ids.forEach(function (id, idx) {
-      stageTimers.push(setTimeout(function () {
-        var el = document.getElementById(id);
-        el.hidden = false;
-        stageTimers.push(setTimeout(function () {
-          el.classList.add('in');
-          scrollThread();
-        }, 20));
-      }, phase2Delays[idx]));
-    });
+    advance('stgDomain', phase3Ids);
   }
 
   function openInstr() {
@@ -1066,6 +1340,15 @@
 
   document.getElementById('looksBtn').addEventListener('click', startPhase2);
   document.getElementById('applyBtn').addEventListener('click', startPhase3);
+  document.getElementById('optSchedule').addEventListener('click', function () { chooseTrigger('schedule'); });
+  document.getElementById('optManual').addEventListener('click', function () { chooseTrigger('manual'); });
+  document.getElementById('schedApplyBtn').addEventListener('click', applySchedule);
+  Array.prototype.slice.call(document.querySelectorAll('.seg-item')).forEach(function (seg) {
+    seg.addEventListener('click', function () { setCadence(seg.getAttribute('data-cadence')); });
+  });
+  Array.prototype.slice.call(document.querySelectorAll('[data-dopt]')).forEach(function (opt) {
+    opt.addEventListener('click', function () { chooseDelivery(parseInt(opt.getAttribute('data-dopt'), 10)); });
+  });
 
   Array.prototype.slice.call(document.querySelectorAll('.d-row')).forEach(function (row) {
     row.addEventListener('click', function () {
